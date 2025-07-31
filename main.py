@@ -62,6 +62,7 @@ def update_or_add_posts(new_posts: list[PostModel]):
     return serialized_posts()
 
 
+
 @app.get("/{full_path:path}")
 def catch_all(full_path: str):
     with open("notFound.html", "r", encoding="utf-8") as file:
