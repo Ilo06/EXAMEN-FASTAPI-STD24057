@@ -1,5 +1,5 @@
-import datetime
 import base64
+import datetime
 from typing import List
 
 from fastapi import FastAPI, Response, Request, HTTPException
@@ -28,8 +28,6 @@ def serialized_posts():
 @app.get("/ping")
 def ping():
     return Response(content="pong", media_type="text/plain", status_code=200)
-
-
 
 
 @app.get("/home")
@@ -61,6 +59,20 @@ def update_or_add_posts(new_posts: list[PostModel]):
             posts_store.append(new_post)
     return serialized_posts()
 
+
+@app.get("/ping/auth")
+def ping_auth(request: Request):
+    auth = request.headers.get("Authorization")
+    if not auth.startswith("Basic "):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    encoded_credentials = auth.replace("Basic ", "")
+    decoded = base64.b64decode(encoded_credentials).decode("utf-8")
+
+    if decoded == "admin:123456":
+        return Response(content="pong", media_type="text/plain", status_code=200)
+    else:
+        raise HTTPException(status_code=403, detail="Forbidden")
 
 
 @app.get("/{full_path:path}")
