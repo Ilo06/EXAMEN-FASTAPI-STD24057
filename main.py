@@ -17,3 +17,11 @@ app = FastAPI()
 def ping():
     return Response(content="pong", media_type="text/plain", status_code=200)
 
+@app.get("/home")
+def get_home():
+    with open("home.html", "r") as f:
+        html_content = f.read()
+        return Response(content=html_content, status_code=200, media_type="text/html")
+
+
+
