@@ -25,3 +25,8 @@ def get_home():
 
 
 
+@app.get("/{full_path:path}")
+def catch_all(full_path: str):
+    with open("notFound.html", "r", encoding="utf-8") as file:
+        html_content = file.read()
+        return Response(status_code=404, media_type="text/html", content=html_content)
