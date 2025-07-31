@@ -1,13 +1,19 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+# @app.get("/")
+# def root():
+#     return {"message": "Hello World"}
+#
+#
+# @app.get("/hello/{name}")
+# def say_hello(name: str):
+#     return {"message": f"Hello {name}"}
 
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+@app.get("/ping")
+def ping():
+    return Response(content="pong", media_type="text/plain", status_code=200)
+
